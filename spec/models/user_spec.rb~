@@ -106,4 +106,13 @@ describe User do
     before { @user.password = @user.password_confirmation = "a" * 5 }
     it { should be_invalid }
   end
+
+  describe "email must be saved downcase" do
+    before do
+      @user.email="TEST@example.com"
+      @user.save
+      @user=User.find_by_email("TEST@example.com")
+      it{ should_not @user.email=="TEST@example.com"}
+    end
+  end
 end
